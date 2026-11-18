@@ -1,0 +1,57 @@
+{
+  "name": "web-toolkits",
+  "owner": {
+    "name": "Nimble",
+    "email": "support@nimbleway.com"
+  },
+  "metadata": {
+    "description": "Nimble Web Toolkits: grouped agent skills for GTM research and hedge fund company research, each with the Nimble MCP server bundled"
+  },
+  "plugins": [
+    {
+      "name": "gtm-web-toolkit",
+      "source": "./gtm-web-toolkit",
+      "description": "Account research agents, people research, fast search, ICP list building and CRM enrichment, and GTM signal data at scale for sales, SDR, RevOps and marketing teams, with the Nimble MCP server bundled.",
+      "version": "1.1.0",
+      "category": "productivity",
+      "tags": [
+        "gtm",
+        "sales",
+        "prospecting",
+        "people-research",
+        "account-research",
+        "enrichment",
+        "web-search"
+      ],
+      "skills": [
+        "./skills/onboard-your-gtm-agent",
+        "./skills/account-deep-research",
+        "./skills/account-fast-search",
+        "./skills/people-research",
+        "./skills/account-lists-and-enrichment",
+        "./skills/gtm-data-at-scale"
+      ]
+    },
+    {
+      "name": "hedge-fund-web-toolkit",
+      "source": "./hedge-fund-web-toolkit",
+      "description": "Deep research agents, fast search, filings and PDF parsing, and alternative data at scale for hedge fund company research, with the Nimble MCP server bundled.",
+      "version": "1.2.5",
+      "category": "productivity",
+      "tags": [
+        "hedge-funds",
+        "investment-research",
+        "alternative-data",
+        "sec-filings",
+        "web-search"
+      ],
+      "skills": [
+        "./skills/onboard-your-agent",
+        "./skills/company-deep-research",
+        "./skills/company-fast-search",
+        "./skills/filings-media-pdfs",
+        "./skills/alt-data-at-scale"
+      ]
+    }
+  ]
+}
