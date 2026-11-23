@@ -4,7 +4,7 @@ Agent skills that give your AI agent (Claude, ChatGPT, Cursor, Codex and others)
 
 | Skill | What it does |
 | - | - |
-| [`onboard-your-gtm-agent`](skills/onboard-your-gtm-agent/SKILL.md) | Start here. Shows the GTM benchmark chart (deep research task comparison for GTM) and the five use cases as tiles for testing Nimble's APIs in your AI plus a tile for integrating them into your stack, gets you onto a free Nimble trial and connected, then routes your request. |
+| [`onboard-your-gtm-agent`](skills/onboard-your-gtm-agent/SKILL.md) | Start here. Shows the GTM benchmark chart and six use-case tiles, each naming the API and the agents behind it, so you see everything the toolkit can do; plus a box for integrating the APIs into your stack. Then it gets you onto a free Nimble trial, connects Nimble and routes your request. |
 | [`account-deep-research`](skills/account-deep-research/SKILL.md) | Cited account research with 12 GTM Web Search Agents (account brief, account signals, buying trigger monitor, decision makers, competitive intelligence, brand intelligence, social media monitor, account enrichment, GTM account enrichment, account discovery, ICP discovery, local business discovery), plus a playbook for building your own agent when none fits. |
 | [`account-fast-search`](skills/account-fast-search/SKILL.md) | Answers in seconds with Nimble Search, Extract and Extract Templates: query patterns, first-party source priority, date scoping, entity disambiguation and privacy-safe sourcing for any account, person or competitor question. |
 | [`people-research`](skills/people-research/SKILL.md) | People research at two speeds: the Search API answers who holds a role, verified as current, in seconds; six people agents go deeper (people discovery from an ICP, person brief, decision makers, buying committee map, contact job-change monitor, social media monitor). Includes person disambiguation and privacy rules. |
@@ -40,6 +40,12 @@ Agent skills that give your AI agent (Claude, ChatGPT, Cursor, Codex and others)
 
    To call the same APIs from your own code, agents or warehouse, see https://docs.nimbleway.com/integrations/overview.
 
+## What your AI shows first
+
+When the onboarding skill loads, your AI shows this screen in the chat: the benchmark, then one tile per use case with the Nimble API and the agents behind it, and an example prompt to try.
+
+<img alt="Onboarding screen: GTM benchmark chart, then six tiles: meeting prep and buying signals, people research, competitive and brand intel, lists and CRM enrichment, fast search, and GTM data at scale, each listing its agents, sources or templates and an example prompt." src="skills/onboard-your-gtm-agent/assets/onboarding.png" width="640">
+
 ## Example requests
 
 - "Prepare me for a meeting with Gong (gong.io). I'm meeting their VP of RevOps."
@@ -67,12 +73,12 @@ Agent skills that give your AI agent (Claude, ChatGPT, Cursor, Codex and others)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="skills/onboard-your-gtm-agent/assets/benchmark-chart-dark.svg">
-  <img alt="Deep research task comparison for GTM: accuracy + coverage score vs. cost per run. Claude Opus 5.5 0.520 at $0.28, Nimble 0.497 at $0.10, GPT-6.1 Sol 0.448 at $0.21, Exa 0.405 at $0.10, Parallel 0.357 at $0.10, Firecrawl 0.316 at $0.10." src="skills/onboard-your-gtm-agent/assets/benchmark-chart-light.svg" width="640">
+  <img alt="Deep research task comparison for GTM: accuracy + coverage score vs. cost per run. Nimble 0.497 at $0.10, GPT-6.1 Sol 0.448 at $0.21, Exa 0.405 at $0.10, Parallel 0.357 at $0.10, Firecrawl 0.316 at $0.10." src="skills/onboard-your-gtm-agent/assets/benchmark-chart-light.svg" width="640">
 </picture>
 
 *GTM Use-Case Benchmark v2, 10 tasks, November 2026. Higher and further left is better.*
 
-In Nimble's public GTM Use-Case Benchmark v2 (meeting prep and signal tracking, 10 tasks, six providers, November 2026), Nimble scored highest of the four research APIs at the same $0.10 a run (0.497), found the most verified facts of any provider and had the best signal-tracking score, at about a third of Claude Opus 5.5's cost. Claude Opus 5.5 scored higher overall (0.520), mostly on meeting prep. Tables, method and caveats: [`benchmark/README.md`](benchmark/README.md).
+In Nimble's public GTM Use-Case Benchmark v2 (meeting prep and signal tracking, 10 tasks, November 2026), Nimble had the highest combined score (0.497) at $0.10 a run, the same price as Exa, Parallel and Firecrawl and about half of GPT-6.1 Sol's cost. It found the most verified facts and scored highest on both meeting prep and signal tracking. Tables, method and caveats: [`benchmark/README.md`](benchmark/README.md).
 
 ## Layout
 
