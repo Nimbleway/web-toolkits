@@ -57,6 +57,9 @@ When the onboarding skill loads, your AI shows this screen in the chat: the benc
 - "Find 15 heads of RevOps at US B2B SaaS companies with 200 to 2,000 employees that raised since 2025." (people research)
 - "Compare Slack, Microsoft Teams and Google Chat on published pricing, target customers and recent launches."
 - "Who is Datadog's current CRO, and since when?" (people research, fast path)
+- "What's Datadog's HQ, headcount and web traffic?" (fast search, `company` focus)
+- "Give me 10 B2B payment infrastructure companies in Europe." (fast search, `company` focus)
+- "Find TikTok creators who post about B2B SaaS and have more than 10,000 followers." (fast search, `creators` focus)
 - "Find up to 15 US legal AI companies, Series A to C since April 2025, 50 to 500 employees, hiring AEs. Show near-misses." (lists)
 - "Enrich these 200 domains with HQ, headcount, last round and CRO, and flag conflicts before we import to Salesforce." (enrichment)
 - "Track new sales job postings at our top 300 accounts every Monday." (GTM data at scale)
@@ -108,6 +111,7 @@ Every agent spec is a snapshot of a template in the **Go-to-market** section of 
 - Web Search Agents: https://docs.nimbleway.com/nimble-sdk/web-search-agents/overview
 - Running agents at scale: https://docs.nimbleway.com/nimble-sdk/web-search-agents/best-practices/running-at-scale
 - Search: https://docs.nimbleway.com/nimble-sdk/web-tools/search
+- Search focus modes (including `company` and `creators`): https://docs.nimbleway.com/nimble-sdk/web-tools/search-depth#focus-modes
 - Extract Templates: https://docs.nimbleway.com/nimble-sdk/web-tools/extract/template
 - Extract Jobs: https://docs.nimbleway.com/nimble-sdk/agentic/jobs
 
