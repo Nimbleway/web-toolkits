@@ -1,6 +1,6 @@
 ---
 name: account-fast-search
-description: Fast, cited web lookups for go-to-market work with Nimble Search, Extract and Extract Templates. Use for quick questions a seller, SDR, RevOps or marketing person asks about an account, a person or a competitor — who holds a role, whether they raised, the latest news, open sales roles on their ATS, what is on their pricing or integrations page, a customer they announced, a G2 rating, an event they're sponsoring — where one to a few searches or known pages answer it in seconds. Covers query writing, source priority, date scoping, entity disambiguation and privacy-safe sourcing. Escalate to account-deep-research when the question needs many sources or a structured multi-part answer.
+description: Fast, cited web lookups for go-to-market work with Nimble Search, Extract and Extract Templates. Use for quick questions a seller, SDR, RevOps or marketing person asks about an account, a person or a competitor — who holds a role, whether they raised, the latest news, open sales roles on their ATS, what is on their pricing or integrations page, a customer they announced, a G2 rating, an event they're sponsoring, a firmographic profile of a company (HQ, headcount, financials, web traffic), a short list of companies matching a description, or Instagram and TikTok creators for a campaign — where one to a few searches or known pages answer it in seconds. Covers query writing, source priority, date scoping, entity disambiguation and privacy-safe sourcing. Escalate to account-deep-research when the question needs many sources or a structured multi-part answer.
 ---
 
 # Fast web search for GTM
@@ -9,7 +9,7 @@ Nimble gives three fast tools. Pick the cheapest one that answers the question, 
 
 | Tool | What it does | Use it for |
 | - | - | - |
-| **Search** (`nimble_search`, `POST /v2/search`) | Live web results across engines; optional cited answer (`include_answer`), full page text (`full_content`) | Finding the page: the press release, the job post, the leadership page, the article. One closed fact. |
+| **Search** (`nimble_search`, `POST /v2/search`) | Live web results across engines; optional cited answer (`include_answer`), full page text (`full_content`); structured company and creator records with the `company` and `creators` focus modes | Finding the page: the press release, the job post, the leadership page, the article. One closed fact. A company profile or a short list of companies or creators. |
 | **Extract** (`nimble_extract`, `POST /v2/extract`) | Clean markdown from one known URL, rendered and unblocked when needed | Reading the page you found: a pricing page, a careers page, an ATS board, a customer story, a newsroom post |
 | **Extract Template** (`nimble_extract_templates_*`, `POST /v2/extract/templates/run`) | Structured JSON from a supported site (Google Maps, Indeed, LinkedIn job search, Google Search, ChatGPT and Perplexity answers, YouTube, TikTok...) | A known listing, job search, SERP or AI answer on a named site |
 
@@ -30,8 +30,29 @@ Stop at the first first-party or primary source that answers the question. If af
 - **Quote exact phrases** a page would contain: `"appointed" "Chief Revenue Officer"`, `"joins as"`, `"Series B"`, `"led by"`, `"acquires"`, `"now available"`, `"partnership"`, `"case study"`.
 - **Scope by domain**: the account's own domain for products, pricing, leadership and newsroom; ATS boards for hiring (`job-boards.greenhouse.io`, `boards.greenhouse.io`, `jobs.ashbyhq.com`, `jobs.lever.co`, `apply.workable.com`, `jobs.gem.com`); press wires (`prnewswire.com`, `businesswire.com`, `globenewswire.com`) for announcements; `g2.com`, `capterra.com`, `trustradius.com` for reviews. Up to 50 domains; `exclude_domains` drops listicles, content farms and data-broker pages.
 - **Scope by time**: `time_range` (`day`, `week`, `month`, `year`) for "latest" questions, or `start_date` / `end_date` (YYYY-MM-DD) for a window such as "since our last call". They cannot be combined.
-- **Pick the focus** (focus modes work only with `search_depth: "lite"`): `focus: "news"` for what happened recently; `focus: "general"` with `content_type: ["pdf"]` (or `presentations`) for case studies, annual reports and investor decks; `focus: "location"` for offices and stores; up to 10 Extract Template names in `focus` to fan one keyword across sites.
+- **Pick the focus**: leave the default (`general`) unless the question calls for another mode. `company` and `creators` work with `lite` and `standard` depth; every other mode needs `search_depth: "lite"`. Use `company` or `creators` only when the question needs company enrichment or creator discovery (see below). `focus: "news"` for what happened recently; `focus: "general"` with `content_type: ["pdf"]` (or `presentations`) for case studies, annual reports and investor decks; `focus: "location"` for offices and stores; up to 10 Extract Template names in `focus` to fan one keyword across sites.
 - **One question per search.** Run independent searches in parallel rather than one long query.
+
+### Company and creators focus modes
+
+These two modes return structured records in `entities` instead of plain web pages. Apply them only when the question needs one of the two things they are built for; for everything else (news, roles, hiring, pricing, a single fact) keep the default focus and the patterns below.
+
+**`focus: "company"`: company enrichment and discovery.** Use it when the question is about the company's own firmographics (HQ, headcount, revenue or financials, funding, web traffic) or asks for companies matching a description.
+
+- Enrich a known account: query the company name plus its domain, e.g. `"Datadog datadoghq.com"`, `max_results: 3`. Pick the record whose domain matches before using any field, and still pin namesakes as in step 1.
+- Discover accounts: describe the market, product, geography or size in plain language, e.g. `"B2B payment infrastructure companies in Europe"`. Up to 25 results per call.
+- Depth: `standard` returns a ~2,000-character profile in `content`; `lite` returns the records with empty `content`; add `full_content: true` for the full profile with financials, funding rounds and workforce breakdown.
+- Fields come from a company data provider, so treat headcount, revenue and traffic as estimates: cite them as such, and confirm a value on a first-party page or filing when it matters.
+- More than a short list (dozens of accounts, criteria to verify per row, or a CSV to fill) goes to `account-lists-and-enrichment`.
+
+**`focus: "creators"`: creator discovery.** Use it when the question is finding Instagram or TikTok creators: influencer or UGC campaigns, partner or ambassador programs, creators in a niche or audience.
+
+- Name the platform, topic and audience size in the query, e.g. `"TikTok B2B SaaS creators with more than 10,000 followers"`. Name the platform in the query rather than relying on `include_domains`, which filters after retrieval and can cut the count.
+- Records carry `platform`, `username`, `display_name`, `followers_count`, `posts_count` and `is_verified`; `title` is the display name and @handle, `url` the profile, `description` the bio. Set `full_content: true` for a markdown profile. `max_results` has no fixed cap.
+- Follower counts change daily: report them with the date you read them.
+- Not for an executive's or prospect's own social posts, LinkedIn, X or YouTube; use the default focus or `people-research` for those.
+
+For both modes keep `include_answer: false`: the records are the answer.
 
 Patterns that travel across most tasks:
 
@@ -39,6 +60,9 @@ Patterns that travel across most tasks:
 | - | - |
 | Who holds a role | `"<Company>" "VP of Sales" OR "Chief Revenue Officer"` with the company's domain; then a date-scoped search on the person's name to confirm the title is still current (see `people-research`) |
 | A new executive | `"<Company>" <domain> appoints OR "joins as" OR hires CRO OR CMO OR "VP"`, `time_range: "month"` |
+| Firmographics (HQ, headcount, revenue, traffic) | `"<Company> <domain>"`, `focus: "company"`, `max_results: 3`; match the record on domain, cite values as provider estimates |
+| Companies that match a description | `"<market or product> companies in <geography>"` plus size or stage, `focus: "company"`, `max_results` up to 25 |
+| Creators for a campaign | `"<Instagram or TikTok> <niche> creators with more than <N> followers"`, `focus: "creators"` |
 | Funding | `"<Company>" <domain> raises Series`, `focus: "news"` with `search_depth: "lite"`, `start_date` set to the window |
 | Acquisitions and partnerships | `"<Company>" acquires OR "acquired by" OR partnership`, `focus: "news"` |
 | Product launches | `include_domains: [<domain>]` + `launch OR "now available" OR "introducing"`, `time_range: "month"`; or Extract the changelog or blog |
@@ -51,7 +75,7 @@ Patterns that travel across most tasks:
 | What AI assistants say about a brand | `chatgpt`, `perplexity`, `google_ai` or `gemini` template with the buyer's prompt |
 | Public company priorities | `"<Company>" "earnings call" OR "investor day" 2026`; 10-K and 8-K on sec.gov (`include_domains: ["sec.gov"]`) |
 
-For a single closed fact, set `include_answer: true` (Nimble Answer) and still check that the answer cites a first-party or reputable page.
+For a single closed fact, set `include_answer: true` (Nimble Answer; not with the `company` or `creators` focus) and still check that the answer cites a first-party or reputable page.
 
 ## Reading pages with Extract
 
