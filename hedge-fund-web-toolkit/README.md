@@ -6,7 +6,7 @@ Agent skills that give your AI agent (Claude, ChatGPT, Cursor, Codex and others)
 | - | - |
 | [`onboard-your-agent`](skills/onboard-your-agent/SKILL.md) | Start here. Shows the finance benchmark chart (deep research task comparison for finance) and the four use cases as tiles for testing Nimble's APIs in your AI plus a tile for integrating them into your stack, gets you onto a free Nimble trial and connected, then routes your research request. |
 | [`company-deep-research`](skills/company-deep-research/SKILL.md) | Cited deep research with 13 hedge fund Web Search Agents (fundamental deep dive, catalyst calendar, filing changes, forensic red flags, management track record, channel check, customer and supplier map, competitor momentum, government contracts, deal terms, deal tracker, credit file, credit early warning), plus a playbook for building your own agent when none fits. |
-| [`company-fast-search`](skills/company-fast-search/SKILL.md) | Answers in seconds with Nimble Search, Extract and Extract Templates: query patterns, source priority, date scoping, entity disambiguation and MNPI-safe sourcing for any company question. |
+| [`company-fast-search`](skills/company-fast-search/SKILL.md) | Answers in seconds with Nimble Search, Extract and Extract Templates: query patterns, the `company` focus mode for company enrichment and peer discovery, source priority, date scoping, entity disambiguation and MNPI-safe sourcing for any company question. |
 | [`filings-media-pdfs`](skills/filings-media-pdfs/SKILL.md) | Parse 10-K exhibits, decks, credit and merger agreements and spreadsheets into markdown with Extract file parsing; download PDFs, images, audio and video with the Media API, to disk or straight to S3/GCS. |
 | [`alt-data-at-scale`](skills/alt-data-at-scale/SKILL.md) | Build alternative-data panels (prices, promotions, rankings, reviews, job postings, store footprints, social, AI-answer visibility) with Extract Templates: batch runs of up to 1,000 inputs, scheduled Extract Jobs into S3 or Databricks, and template generation for sites without one. |
 
@@ -47,6 +47,8 @@ Agent skills that give your AI agent (Claude, ChatGPT, Cursor, Codex and others)
 - "Track the approval status of Union Pacific's acquisition of Norfolk Southern."
 - "Log early-warning signals for New Fortress Energy since 2026-05-01."
 - "Who is CoreWeave's CFO, and when did they join?" (fast search)
+- "What are Brightspeed's HQ, headcount, revenue estimate and web traffic?" (fast search, `company` focus)
+- "List 15 B2B payment infrastructure companies in Europe for a peer set." (fast search, `company` focus)
 - "Pull the maturity schedule out of this credit agreement PDF." (filings and PDFs)
 - "Track Celsius and Alani Nu prices and in-stock rates at Walmart and Target daily for 20 zip codes." (alt data)
 
@@ -91,6 +93,8 @@ benchmark/README.md                           # Finance Use-Case Benchmark v2 re
 
 - Nimble docs: https://docs.nimbleway.com (machine index: https://docs.nimbleway.com/llms.txt)
 - Web Search Agents: https://docs.nimbleway.com/nimble-sdk/web-search-agents/overview
+- Search: https://docs.nimbleway.com/nimble-sdk/web-tools/search
+- Search focus modes (including `company`): https://docs.nimbleway.com/nimble-sdk/web-tools/search-depth#focus-modes
 - Extract Templates: https://docs.nimbleway.com/nimble-sdk/web-tools/extract/template
 - Media: https://docs.nimbleway.com/nimble-sdk/web-tools/media
 - File parsing: https://docs.nimbleway.com/nimble-sdk/web-tools/extract/features/file-parsing

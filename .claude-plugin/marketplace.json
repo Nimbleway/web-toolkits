@@ -36,7 +36,7 @@
       "name": "hedge-fund-web-toolkit",
       "source": "./hedge-fund-web-toolkit",
       "description": "Deep research agents, fast search, filings and PDF parsing, and alternative data at scale for hedge fund company research, with the Nimble MCP server bundled.",
-      "version": "1.2.5",
+      "version": "1.3.0",
       "category": "productivity",
       "tags": [
         "hedge-funds",

@@ -1,6 +1,6 @@
 {
   "name": "hedge-fund-web-toolkit",
-  "version": "1.2.5",
+  "version": "1.3.0",
   "description": "Nimble skills for company investment research at hedge funds: cited deep research with 13 hedge fund Web Search Agents, fast primary-source search, filing and PDF parsing with media download, and alternative data at scale with Extract Templates.",
   "author": {
     "name": "Nimble",
