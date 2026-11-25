@@ -5,7 +5,7 @@ Grouped agent skills that give your AI agent (Claude, ChatGPT, Cursor, Codex and
 | Toolkit | For | Skills |
 | - | - | - |
 | [GTM Web Toolkit](gtm-web-toolkit/) | Sales, SDR, RevOps and marketing teams | Onboarding, account deep research (12 GTM Web Search Agents), account fast search (with `company` and `creators` focus modes), people research, account lists and CRM enrichment, GTM data at scale |
-| [Hedge Fund Web Toolkit](hedge-fund-web-toolkit/) | Analysts, PMs, credit and event-driven desks | Onboarding, company deep research (13 hedge fund Web Search Agents), company fast search, filings, media and PDFs, alt data at scale |
+| [Hedge Fund Web Toolkit](hedge-fund-web-toolkit/) | Analysts, PMs, credit and event-driven desks | Onboarding, company deep research (13 hedge fund Web Search Agents), company fast search (with the `company` focus mode), filings, media and PDFs, alt data at scale |
 
 ## Install
 

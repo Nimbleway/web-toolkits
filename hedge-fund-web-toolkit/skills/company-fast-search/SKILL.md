@@ -1,6 +1,6 @@
 ---
 name: company-fast-search
-description: Fast, cited web lookups for company investment research with Nimble Search, Extract and Extract Templates. Use for quick questions an analyst or PM asks about a public or private company — a filing pointer, a date, an executive, a deal term, the latest 8-K, today's price or promotion on a retailer page, a recent news check, an IR deck link — where one to a few searches or known pages answer it in seconds. Covers query writing, source priority, date scoping, entity disambiguation and MNPI-safe sourcing. Escalate to company-deep-research when the question needs many sources or a structured multi-part answer.
+description: Fast, cited web lookups for company investment research with Nimble Search, Extract and Extract Templates. Use for quick questions an analyst or PM asks about a public or private company — a filing pointer, a date, an executive, a deal term, the latest 8-K, today's price or promotion on a retailer page, a recent news check, an IR deck link, a firmographic profile of a private company (HQ, headcount, revenue estimate, funding, web traffic), a short list of companies in a market for comps or a peer set — where one to a few searches or known pages answer it in seconds. Covers query writing, source priority, date scoping, entity disambiguation and MNPI-safe sourcing. Escalate to company-deep-research when the question needs many sources or a structured multi-part answer.
 ---
 
 # Fast web search for company investment research
@@ -9,7 +9,7 @@ Nimble gives three fast tools. Pick the cheapest one that answers the question, 
 
 | Tool | What it does | Use it for |
 | - | - | - |
-| **Search** (`nimble_search`, `POST /v2/search`) | Live web results across engines; optional cited answer (`include_answer`), full page text (`full_content`) | Finding the page: the filing, the release, the deck, the article. One closed fact. |
+| **Search** (`nimble_search`, `POST /v2/search`) | Live web results across engines; optional cited answer (`include_answer`), full page text (`full_content`); structured company records with the `company` focus mode | Finding the page: the filing, the release, the deck, the article. One closed fact. A company profile or a short list of companies. |
 | **Extract** (`nimble_extract`, `POST /v2/extract`) | Clean markdown from one known URL, rendered and unblocked when needed | Reading the page you found: an 8-K, an IR page, a pricing page, a court docket |
 | **Extract Template** (`nimble_extract_templates_*`, `POST /v2/extract/templates/run`) | Structured JSON from a supported site (Amazon, Walmart, Google Maps, app and review sites, job boards...) | A known product, store, listing or SERP on a named site |
 
@@ -31,13 +31,26 @@ Stop at the first primary source that answers the question. If after three searc
 - **Name the document type**: `10-K`, `8-K`, `DEF 14A`, `S-4`, `424B4`, `"investor presentation"`, `"earnings call transcript"`, `"press release"`.
 - **Scope by domain**: `include_domains: ["sec.gov"]` for filings, the company's IR domain for decks, `["fda.gov","clinicaltrials.gov"]` for biotech, `["courtlistener.com"]` for dockets, `["usaspending.gov","sam.gov"]` for federal contracts. Up to 50 domains; `exclude_domains` drops mirrors, content farms and stock-promo sites.
 - **Scope by time**: `time_range` (`day`, `week`, `month`, `year`) for "latest" questions, or `start_date` / `end_date` (YYYY-MM-DD) for a window such as "since the last earnings call" or "as of the deal announcement". They cannot be combined.
-- **Pick the focus**: `focus: "news"` for what happened this week; `focus: "general"` with `content_type: ["pdf"]` (or `presentations`, `spreadsheets`) for decks, annual reports and statistical releases; `focus: "shopping"` for product pricing across merchants; `focus: "location"` for stores and sites.
+- **Pick the focus**: leave the default (`general`) unless the question calls for another mode. `company` and `general` work with `lite` and `standard` depth; every other mode needs `search_depth: "lite"`. Use `company` only when the question needs company enrichment or discovery (see below). `focus: "news"` for what happened this week; `focus: "general"` with `content_type: ["pdf"]` (or `presentations`, `spreadsheets`) for decks, annual reports and statistical releases; `focus: "shopping"` for product pricing across merchants; `focus: "location"` for stores and sites.
 - **One question per search.** Run independent searches in parallel rather than one long query.
+
+### Company focus mode
+
+`focus: "company"` returns structured company records in `entities` instead of plain web pages. Apply it only when the question needs company enrichment or discovery; for filings, events, deal terms, executives, prices and news, keep the default focus and the patterns below.
+
+- **Enrich a known company**, most useful for private companies with no filings: HQ, headcount, revenue estimates, funding, web traffic. Query the company name plus its domain, e.g. `"Brightspeed brightspeed.com"`, `max_results: 3`, and pick the record whose domain matches before using any field. Pin namesakes as in step 1.
+- **Discover companies** for a peer set, a comps screen, add-on targets or a competitor map: describe the market, product, geography or size in plain language, e.g. `"B2B payment infrastructure companies in Europe"`. Up to 25 results per call.
+- **Depth:** `standard` returns a ~2,000-character profile in `content`; `lite` returns the records with empty `content`; add `full_content: true` for the full profile with financials, funding rounds and workforce breakdown.
+- **Treat the fields as estimates.** They come from a company data provider, so cite them as such. For a public company, the filings win: never use a provider revenue or headcount figure where a 10-K, 10-Q or annual report gives one. For a private company, confirm a value that matters on a primary page (the company's own release, a registry, a funding announcement).
+- Keep `include_answer: false`: the records are the answer.
+- More than a short list (dozens of companies, criteria to verify per row) goes to `company-deep-research`.
 
 Patterns that travel across most tasks:
 
 | Need | Query sketch |
 | - | - |
+| Private company profile (HQ, headcount, revenue estimate, funding, traffic) | `"<Company> <domain>"`, `focus: "company"`, `max_results: 3`; match the record on domain, cite values as provider estimates |
+| Peer set or comps screen | `"<market or product> companies in <geography>"` plus size or stage, `focus: "company"`, `max_results` up to 25 |
 | Latest material event | `"<Company>" 8-K` + `include_domains: ["sec.gov"]`, `time_range: "month"` |
 | Officer or director change | `"<Company>" "Item 5.02"` on sec.gov, or `"<Company>" appoints OR resigns CFO` with `focus: "news"` |
 | Auditor change or restatement | `"<Company>" "Item 4.01"` / `"Item 4.02"` / `"non-reliance"` |
@@ -50,7 +63,7 @@ Patterns that travel across most tasks:
 | Price or promotion today | Extract Template on the retailer (`walmart_pdp`, `amazon_pdp`, `target_serp`...), or Extract on the pricing page |
 | Hiring signal | Extract the company's careers page or ATS board (Greenhouse, Lever, Ashby, Workday); `indeed_serp` template for postings |
 
-For a single closed fact, set `include_answer: true` (Nimble Answer) and still check that the answer cites a primary page.
+For a single closed fact, set `include_answer: true` (Nimble Answer; not with the `company` focus) and still check that the answer cites a primary page.
 
 ## Reading pages with Extract
 
