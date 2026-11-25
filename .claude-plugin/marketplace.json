@@ -12,7 +12,7 @@
       "name": "gtm-web-toolkit",
       "source": "./gtm-web-toolkit",
       "description": "Account research agents, people research, fast search, ICP list building and CRM enrichment, and GTM signal data at scale for sales, SDR, RevOps and marketing teams, with the Nimble MCP server bundled.",
-      "version": "1.2.0",
+      "version": "1.2.1",
       "category": "productivity",
       "tags": [
         "gtm",
@@ -36,7 +36,7 @@
       "name": "hedge-fund-web-toolkit",
       "source": "./hedge-fund-web-toolkit",
       "description": "Deep research agents, fast search, filings and PDF parsing, and alternative data at scale for hedge fund company research, with the Nimble MCP server bundled.",
-      "version": "1.2.5",
+      "version": "1.2.6",
       "category": "productivity",
       "tags": [
         "hedge-funds",
